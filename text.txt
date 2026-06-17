@@ -1,0 +1,285 @@
+Index.html
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Mom! ❤️</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: linear-gradient(135deg, #fff5f5, #ffccd5);
+            font-family: 'Poppins', 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+        /* Gift Box Styling */
+        .gift-container {
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+            z-index: 10;
+        }
+        .gift-container:hover {
+            transform: scale(1.05);
+        }
+        .box {
+            width: 140px;
+            height: 140px;
+            background: #ff4757;
+            position: relative;
+            margin: 0 auto;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 10px 25px rgba(255, 71, 87, 0.3);
+        }
+        .box::before {
+            content: '';
+            position: absolute;
+            background: #ffa502;
+            width: 26px;
+            height: 100%;
+            left: 57px;
+        }
+        .lid {
+            width: 160px;
+            height: 35px;
+            background: #ff6b81;
+            position: absolute;
+            top: -35px;
+            left: -10px;
+            border-radius: 5px;
+            z-index: 2;
+        }
+        .lid::before {
+            content: '';
+            position: absolute;
+            background: #ffa502;
+            width: 26px;
+            height: 100%;
+            left: 67px;
+        }
+        .ribbon {
+            width: 50px;
+            height: 50px;
+            border: 12px solid #ffa502;
+            border-radius: 50% 50% 0 50%;
+            position: absolute;
+            top: -72px;
+            left: 28px;
+            transform: rotate(-45deg);
+        }
+        .ribbon::after {
+            content: '';
+            width: 50px;
+            height: 50px;
+            border: 12px solid #ffa502;
+            border-radius: 50% 50% 50% 0;
+            position: absolute;
+            top: -12px;
+            left: 12px;
+            transform: rotate(90deg);
+        }
+        .click-text {
+            margin-top: 25px;
+            font-size: 22px;
+            color: #ff4757;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            animation: bounce 0.8s infinite alternate;
+        }
+        /* Birthday Card Content */
+        .card {
+            background: white;
+            padding: 30px 20px;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            text-align: center;
+            max-width: 420px;
+            width: 90%;
+            display: none;
+            transform: scale(0.5);
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 5;
+        }
+        /* Slideshow Container */
+        .slideshow-container {
+            width: 220px;
+            height: 280px;
+            margin: 0 auto 20px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            border: 5px solid #ff6b81;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .slide.active {
+            opacity: 1;
+        }
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        h1 {
+            color: #ff4757;
+            margin-bottom: 15px;
+            font-size: 26px;
+            font-weight: 700;
+        }
+        p {
+            color: #57606f;
+            line-height: 1.6;
+            font-size: 15px;
+            font-weight: 500;
+            white-space: pre-line;
+            text-align: center;
+        }
+        /* Balloons Animation */
+        .balloon {
+            position: absolute;
+            width: 50px;
+            height: 65px;
+            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            bottom: -100px;
+            z-index: 1;
+            opacity: 0.85;
+            animation: flyUp 6s linear forwards;
+        }
+        .balloon::after {
+            content: "🎈";
+            font-size: 40px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        /* Animations */
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-12px); }
+        }
+        @keyframes flyUp {
+            0% { transform: translateY(0) rotate(0deg); left: var(--start-x); }
+            100% { transform: translateY(-120vh) rotate(20deg); left: var(--end-x); }
+        }
+        .show-card {
+            display: block !important;
+            transform: scale(1) !important;
+            opacity: 1 !important;
+            animation: float 4s infinite ease-in-out;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Gift Box Section -->
+    <div class="gift-container" id="giftBox" onclick="openGift()">
+        <div class="box">
+            <div class="lid">
+                <div class="ribbon"></div>
+            </div>
+        </div>
+        <div class="click-text">🎁 Mom, Aapke Liye Ek Chhota Sa Gift! ✨</div>
+    </div>
+
+    <!-- Birthday Card Section -->
+    <div class="card" id="birthdayCard">
+        <!-- Photo Slideshow -->
+        <div class="slideshow-container">
+            <div class="slide active"><img src="image.png" alt="Mom Photo 1"></div>
+            <div class="slide"><img src="image_2.png" alt="Mom Photo 2"></div>
+            <div class="slide"><img src="image_3.png" alt="Mom Photo 3"></div>
+            <div class="slide"><img src="image_4.png" alt="Mom Photo 4"></div>
+            <div class="slide"><img src="image_5.png" alt="Mom Photo 5"></div>
+            <div class="slide"><img src="image_6.png" alt="Mom Photo 6"></div>
+            <div class="slide"><img src="image_7.png" alt="Mom Photo 7"></div>
+            <div class="slide"><img src="image_8.png" alt="Mom Photo 8"></div>
+            <div class="slide"><img src="image_9.png" alt="Mom Photo 9"></div>
+            <div class="slide"><img src="image_10.png" alt="Mom Photo 10"></div>
+        </div>
+        
+        <h1>Happy Birthday, Mom! ❤️</h1>
+        <p id="messageText">To the queen of our family:
+
+Happy Birthday, Mom. You've turned every struggle into strength, every tear into a lesson, and every moment into a memory. I hope today is filled with as much beauty, joy, and love as the countless days you've given us. You're a masterpiece, and I'm endlessly grateful to be your son. 🎂✨🥳</p>
+    </div>
+
+    <!-- Background Music -->
+    <audio id="bgMusic" loop>
+        <source src="nastelbom-happy-birthday-469282.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        function openGift() {
+            const giftBox = document.getElementById('giftBox');
+            const card = document.getElementById('birthdayCard');
+            const music = document.getElementById('bgMusic');
+
+            giftBox.style.display = 'none';
+            card.classList.add('show-card');
+            
+            // Play background music
+            music.play().catch(err => console.log("Audio play blocked by browser security until user interaction."));
+
+            // Start Slideshow
+            startSlideshow();
+
+            // Generate Balloons
+            for (let i = 0; i < 25; i++) {
+                createBalloon();
+            }
+        }
+
+        function startSlideshow() {
+            const slides = document.querySelectorAll('.slide');
+            let currentSlide = 0;
+            
+            setInterval(() => {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 3000);
+        }
+
+        function createBalloon() {
+            const balloon = document.createElement('div');
+            balloon.classList.add('balloon');
+            
+            const startX = Math.random() * 100 + "vw";
+            const endX = Math.random() * 100 + "vw";
+            balloon.style.setProperty('--start-x', startX);
+            balloon.style.setProperty('--end-x', endX);
+            
+            balloon.style.animationDelay = Math.random() * 3 + "s";
+            balloon.style.animationDuration = Math.random() * 3 + 4 + "s";
+            
+            document.body.appendChild(balloon);
+            
+            setTimeout(() => {
+                balloon.remove();
+            }, 7000);
+        }
+    </script>
+</body>
+</html>
